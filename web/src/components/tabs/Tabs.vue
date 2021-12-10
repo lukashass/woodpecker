@@ -66,7 +66,7 @@ export default defineComponent({
     const disableHashMode = toRef(props, 'disableHashMode');
     const modelValue = toRef(props, 'modelValue');
     const tabs = ref<Tab[]>([]);
-    const activeTab = ref();
+    const activeTab = ref<string>();
     provide('tabs', tabs);
     provide(
       'active-tab',

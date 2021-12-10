@@ -44,12 +44,12 @@ export default defineComponent({
       branches.value = await apiClient.getRepoBranches(repo.value.owner, repo.value.name);
     }
 
-    onMounted(() => {
-      loadBranches();
+    onMounted(async () => {
+      await loadBranches();
     });
 
-    watch(repo, () => {
-      loadBranches();
+    watch(repo, async () => {
+      await loadBranches();
     });
 
     return { branches };

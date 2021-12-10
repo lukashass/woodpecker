@@ -16,13 +16,13 @@ function loadUserConfig(): UserConfig {
     return defaultUserConfig;
   }
 
-  return JSON.parse(lsData);
+  return JSON.parse(lsData) as UserConfig;
 }
 
 const config = ref<UserConfig>(loadUserConfig());
 
 export default () => ({
-  setUserConfig<T extends keyof UserConfig>(key: T, value: UserConfig[T]): void {
+  setUserConfig: <T extends keyof UserConfig>(key: T, value: UserConfig[T]): void => {
     config.value = { ...config.value, [key]: value };
     localStorage.setItem(USER_CONFIG_KEY, JSON.stringify(config.value));
   },

@@ -164,12 +164,12 @@ export default defineComponent({
 
         return build.value.procs[0].children[0].pid;
       },
-      set(_selectedProcId: number | null) {
+      async set(_selectedProcId: number | null) {
         if (!_selectedProcId) {
           return;
         }
 
-        router.replace({ params: { ...route.params, procId: `${_selectedProcId}` } });
+        await router.replace({ params: { ...route.params, procId: `${_selectedProcId}` } });
       },
     });
 

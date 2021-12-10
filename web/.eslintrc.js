@@ -22,6 +22,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'airbnb-base-ts',
     'plugin:import/errors',
     'plugin:import/warnings',

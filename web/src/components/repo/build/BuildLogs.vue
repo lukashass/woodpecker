@@ -56,7 +56,7 @@ export default defineComponent({
     const logLines = computed(() => buildProc.logs.value?.map((l) => ({ ...l, out: ansiConvert.toHtml(l.out) })));
     const proc = computed(() => build.value && findProc(build.value.procs || [], procId.value));
 
-    function loadBuildProc() {
+    async function loadBuildProc() {
       if (!repo) {
         throw new Error('Unexpected: "repo" should be provided at this place');
       }
@@ -65,15 +65,15 @@ export default defineComponent({
         return;
       }
 
-      buildProc.load(repo.value.owner, repo.value.name, build.value.number, proc.value);
+      await buildProc.load(repo.value.owner, repo.value.name, build.value.number, proc.value);
     }
 
-    onMounted(() => {
-      loadBuildProc();
+    onMounted(async () => {
+      await loadBuildProc();
     });
 
-    watch([repo, build, procId], () => {
-      loadBuildProc();
+    watch([repo, build, procId], async () => {
+      await loadBuildProc();
     });
 
     onBeforeUnmount(() => {

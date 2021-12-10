@@ -37,8 +37,8 @@ export default defineComponent({
   setup() {
     const buildFeed = useBuildFeed();
 
-    onMounted(() => {
-      buildFeed.load();
+    onMounted(async () => {
+      await buildFeed.load();
     });
 
     return buildFeed;

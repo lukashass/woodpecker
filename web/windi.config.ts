@@ -17,7 +17,9 @@ export default defineConfig({
           900: '#2e323e',
         },
       },
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       stroke: (theme) => theme('colors'),
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       fill: (theme) => theme('colors'),
     },
   },

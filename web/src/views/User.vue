@@ -44,7 +44,7 @@ export default defineComponent({
 
   setup() {
     const apiClient = useApiClient();
-    const token = ref<string | undefined>();
+    const token = ref<string>();
 
     onMounted(async () => {
       token.value = await apiClient.getToken();
@@ -55,7 +55,7 @@ export default defineComponent({
 
     const usageWithShell = computed(() => {
       let usage = `export WOODPECKER_SERVER="${address}"\n`;
-      usage += `export WOODPECKER_TOKEN="${token.value}"\n`;
+      usage += `export WOODPECKER_TOKEN="${token.value || ''}"\n`;
       return usage;
     });
 

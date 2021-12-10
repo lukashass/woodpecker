@@ -91,12 +91,12 @@ export default defineComponent({
       await buildStore.loadBuilds(repoOwner.value, repoName.value);
     }
 
-    onMounted(() => {
-      loadRepo();
+    onMounted(async () => {
+      await loadRepo();
     });
 
-    watch([repoOwner, repoName], () => {
-      loadRepo();
+    watch([repoOwner, repoName], async () => {
+      await loadRepo();
     });
 
     const badgeUrl = computed(() => `/api/badges/${repo.value.owner}/${repo.value.name}/status.svg`);
@@ -108,11 +108,11 @@ export default defineComponent({
         }
         return 'activity';
       },
-      set(tab: string) {
+      async set(tab: string) {
         if (tab === 'branches') {
-          router.push({ name: 'repo-branches' });
+          await router.push({ name: 'repo-branches' });
         } else {
-          router.push({ name: 'repo' });
+          await router.push({ name: 'repo' });
         }
       },
     });

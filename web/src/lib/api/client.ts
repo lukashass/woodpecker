@@ -58,7 +58,7 @@ export default class ApiClient {
           if (xhr.status >= 300) {
             const error: ApiError = {
               status: xhr.status,
-              message: xhr.response,
+              message: xhr.response as string,
             };
             if (this.onerror) {
               this.onerror(error);
