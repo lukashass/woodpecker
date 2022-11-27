@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { computed, Ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
@@ -35,8 +36,10 @@ export default (pipeline: Ref<Pipeline | undefined>) => {
     if (sinceElapsed.value === undefined) {
       return null;
     }
+    console.log('sinceElapsed.value', sinceElapsed.value);
 
-    return timeAgo.format(sinceElapsed.value);
+    // return timeAgo.format(sinceElapsed.value);
+    return dayjs(sinceElapsed.value).fromNow();
   });
 
   const durationRaw = computed(() => {
@@ -71,7 +74,8 @@ export default (pipeline: Ref<Pipeline | undefined>) => {
       return i18n.t('time.not_started');
     }
 
-    return prettyDuration(durationElapsed.value);
+    return dayjs.duration(durationElapsed.value).humanize();
+    // return prettyDuration(durationElapsed.value);
   });
 
   const message = computed(() => {

@@ -33,7 +33,6 @@
 
 <script lang="ts" setup>
 import { useLocalStorage } from '@vueuse/core';
-import dayjs from 'dayjs';
 import TimeAgo from 'javascript-time-ago';
 import { SUPPORTED_LOCALES } from 'virtual:vue-i18n-supported-locales';
 import { computed, onMounted, ref } from 'vue';
@@ -43,6 +42,7 @@ import Button from '~/components/atomic/Button.vue';
 import SelectField from '~/components/form/SelectField.vue';
 import Scaffold from '~/components/layout/scaffold/Scaffold.vue';
 import useApiClient from '~/compositions/useApiClient';
+import { loadLocale } from '~/compositions/useDate';
 import { setI18nLanguage } from '~/compositions/useI18n';
 
 const { t, locale } = useI18n();
@@ -84,7 +84,7 @@ const selectedLocale = computed<string>({
     await setI18nLanguage(_selectedLocale);
     storedLocale.value = _selectedLocale;
     locale.value = _selectedLocale;
-    dayjs.locale(_selectedLocale);
+    loadLocale(_selectedLocale);
     TimeAgo.setDefaultLocale(_selectedLocale);
   },
   get() {
