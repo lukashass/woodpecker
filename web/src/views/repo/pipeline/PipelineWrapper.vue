@@ -8,9 +8,9 @@
       :fluid-content="activeTab !== 'tasks'"
     >
       <template #title>
-        <span class="w-full md:w-auto text-center">{{ $t('repo.pipeline.pipeline', { pipelineId }) }}</span>
+        <span class="md:w-auto text-center whitespace-nowrap">{{ $t('repo.pipeline.pipeline', { pipelineId }) }}</span>
         <span class="<md:hidden">-</span>
-        <span class="w-full md:w-auto text-center truncate">{{ message }}</span>
+        <span :title="message" class="md:w-auto text-center truncate">{{ message }}</span>
       </template>
 
       <template #titleActions>

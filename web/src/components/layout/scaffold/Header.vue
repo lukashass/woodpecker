@@ -1,15 +1,15 @@
 <template>
   <header class="bg-white dark:bg-dark-gray-900 border-b dark:border-gray-700 text-color">
     <FluidContainer class="!py-0">
-      <div class="flex flex-wrap items-center justify-between py-4 <md:flex-row <md:gap-y-4">
+      <div class="flex flex-wrap w-full items-center justify-between py-4 <md:flex-row <md:gap-y-4">
         <div
-          class="flex flex-wrap items-center justify-start <md:w-full <md:justify-center"
+          class="flex flex-wrap w-full items-center justify-start <md:w-full <md:justify-center"
           :class="{
             'md:flex-1': searchBoxPresent,
           }"
         >
           <IconButton v-if="goBack" icon="back" :title="$t('back')" class="mr-2 <md:hidden" @click="goBack" />
-          <h1 class="flex flex-wrap text-xl text-color items-center gap-x-2">
+          <h1 class="flex text-xl text-color items-center gap-x-2 overflow-ellipsis w-full">
             <slot name="title" />
           </h1>
         </div>
