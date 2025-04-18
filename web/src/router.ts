@@ -6,6 +6,14 @@ import useAuthentication from '~/compositions/useAuthentication';
 import useConfig from '~/compositions/useConfig';
 import useUserConfig from '~/compositions/useUserConfig';
 
+import { useRepoStore } from './store/repos';
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    title?: string | ((params: Record<string, any>) => string);
+  }
+}
+
 const { rootPath } = useConfig();
 const routes: RouteRecordRaw[] = [
   {
@@ -21,13 +29,13 @@ const routes: RouteRecordRaw[] = [
         path: '',
         name: 'repos',
         component: (): Component => import('~/views/Repos.vue'),
-        meta: { authentication: 'required' },
+        meta: { authentication: 'required', title: 'Repositories' },
       },
       {
         path: 'add',
         name: 'repo-add',
         component: (): Component => import('~/views/RepoAdd.vue'),
-        meta: { authentication: 'required' },
+        meta: { authentication: 'required', title: 'Add Repository' },
       },
       {
         path: ':repoId',
@@ -39,7 +47,12 @@ const routes: RouteRecordRaw[] = [
             path: '',
             name: 'repo',
             component: (): Component => import('~/views/repo/RepoPipelines.vue'),
-            meta: { repoHeader: true },
+            meta: {
+              repoHeader: true,
+              title: (params) => {
+                return `Pipelines | ${params.repo.full_name}`;
+              },
+            },
           },
           {
             path: 'branches',
@@ -361,6 +374,19 @@ router.beforeEach(async (to, _, next) => {
   if (authenticationRequired && !authentication.isAuthenticated) {
     next({ name: 'login', query: { url: to.fullPath } });
     return;
+  }
+
+  if (typeof to.meta?.title === 'function') {
+    const repoStore = useRepoStore();
+    const params = {};
+    if (to.params.repoId) {
+      params.repo = await repoStore.loadRepo(to.params.repoId);
+    }
+    console.log(params.repo);
+
+    document.title = `${to.meta.title(params)} | Woodpecker`;
+  } else {
+    document.title = to.meta?.title ? `${to.meta.title} | Woodpecker` : 'Woodpecker';
   }
 
   next();
